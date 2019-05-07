@@ -1,7 +1,6 @@
 package io.jetpack.ysan.gankio.ui.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -68,7 +67,6 @@ class HomeFragment : Fragment() {
                 transaction.show(it)
             } ?: LastNewFragment.getInstance().let {
                 mLastNewFragment = it
-                Log.i("ysan", "替换 fragment ")
                 transaction.add(R.id.fragment_container, it, "lastNew")
             }
             R.id.tab_category
