@@ -2,7 +2,7 @@
 Gankio Android App (Jetpack + Mvp + kotlin)
 
 ## TODO
-* [ x ] 最新
+* [x] 最新
 * [ ] 分类
 * [ ] 闲读
 * [ ] 图片
