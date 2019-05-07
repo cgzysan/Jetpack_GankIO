@@ -9,6 +9,6 @@ Gankio Android App (Jetpack + Mvp + kotlin)
 * [ ] 更多
 
 ## Thanks
-@zeleven (https://github.com/zeleven) </br>
-@git-xuhao (https://github.com/git-xuhao) </br>
+@[zeleven] (https://github.com/zeleven) </br>
+@[git-xuhao] (https://github.com/git-xuhao) </br>
 在两位的代码中,我学习到了很多.
