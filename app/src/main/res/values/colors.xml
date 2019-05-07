@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FFFFFF</color>
+    <color name="colorPrimaryDark">#e0e0e0</color>
+    <color name="colorAccent">#3886ff</color>
+
+    <color name="bg_grey">#ebebeb</color>
+    <color name="search_font_grey">#999999</color>
+
+    <color name="tab_blue">#00bbff</color>
+    <color name="tab_grey">#bfbfbf</color>
+
+    <color name="color_gray">#9a9a9a</color>
+    <color name="black">#000000</color>
+
+    <!-- title 半透明背景颜色 -->
+    <color name="color_title_bg">#CCFFFFFF</color>
+    <color name="color_transparent">#00000000</color>
+</resources>

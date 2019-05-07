@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/tab_lastnew"
+        android:title="@string/lastNew"
+        android:icon="@drawable/icon_home"/>
+    <item android:id="@+id/tab_category"
+        android:title="@string/category"
+        android:icon="@drawable/icon_category"/>
+    <item android:id="@+id/tab_read"
+          android:title="@string/read"
+          android:icon="@drawable/icon_read"/>
+    <item android:id="@+id/tab_pictures"
+        android:title="@string/picture"
+        android:icon="@drawable/icon_pic"/>
+    <item android:id="@+id/tab_more"
+        android:title="@string/more"
+        android:icon="@drawable/icon_more"/>
+</menu>

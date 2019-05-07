@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Shell</string>
+    <string name="search">搜索</string>
+
+    <string name="lastNew">最新</string>
+    <string name="category">分类</string>
+    <string name="read">闲读</string>
+    <string name="picture">图片</string>
+    <string name="more">更多</string>
+
+    <!-- CoordinatorLayout Behavior -->
+    <string name="bottom_navigation_behavior" translatable="false">io.jetpack.ysan.gankio.widget.BottomNavigationViewBehavior</string>
+
+    <string name="loading_text">加载中&#8230;</string>
+    <string name="no_network">请检查网络后点击重新加载</string>
+    <string name="data_error">数据获取失败(ㄒoㄒ)~~</string>
+    <string name="empty_view_hint">暂时木有内容呀~~</string>
+</resources>
