@@ -33,7 +33,7 @@ class SplashFragment : Fragment() {
         val delayRequest = OneTimeWorkRequestBuilder<DelayWork>().build()
         WorkManager.getInstance().enqueue(delayRequest)
         WorkManager.getInstance().getWorkInfoByIdLiveData(delayRequest.id).observe(this, Observer {
-            Log.i("ysan",  it?.state?.name)
+            Log.i("ysan",  "延时任务:${ it?.state?.name }")
             if (it?.state!!.isFinished) {
                 findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
             }

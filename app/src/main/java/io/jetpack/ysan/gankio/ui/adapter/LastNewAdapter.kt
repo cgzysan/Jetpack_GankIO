@@ -1,10 +1,12 @@
 package io.jetpack.ysan.gankio.ui.adapter
 
 import android.content.Context
+import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.youth.banner.Banner
@@ -108,6 +110,11 @@ class LastNewAdapter(context: Context, data: ArrayList<Any>) : CommonAdapter<Any
                     this.visibility = View.GONE
                 }
             }
+            setOnItemClickListener(listener = View.OnClickListener {
+                val bundle = Bundle()
+                bundle.putSerializable("item_data", data)
+                it.findNavController().navigate(R.id.action_homeFragment_to_webViewFragment, bundle)
+            })
         }
     }
 

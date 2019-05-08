@@ -1,6 +1,7 @@
 package io.jetpack.ysan.gankio.mvp.model.entity
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 
 /**
@@ -17,4 +18,4 @@ data class Data(
     val used: Boolean,
     val who: String,
     val images: List<String>
-)
+) : Serializable

@@ -1,6 +1,7 @@
 package io.jetpack.ysan.gankio.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -37,8 +38,8 @@ class LastNewFragment : BaseFragment(), LastNewContract.View {
 
     companion object {
         fun getInstance() : LastNewFragment {
-            var fragment = LastNewFragment()
-            var bundle = Bundle()
+            val fragment = LastNewFragment()
+            val bundle = Bundle()
             fragment.arguments = bundle
             return fragment
         }
@@ -48,6 +49,7 @@ class LastNewFragment : BaseFragment(), LastNewContract.View {
      * 初始化 View
      */
     override fun initView() {
+        Log.i("ysan", "lastFragment initView ")
         mPresenter.attachView(this)
         mRefreshLayout.setEnableHeaderTranslationContent(true)
         mRefreshLayout.setOnRefreshListener {
@@ -87,7 +89,7 @@ class LastNewFragment : BaseFragment(), LastNewContract.View {
             }
         })
 
-        mLayoutStatusView = multipleStatusView
+        mLayoutStatusView = last_new_multipleStatusView
 
         //状态栏透明和间距处理
         activity?.let { StatusBarUtil.darkMode(it) }
