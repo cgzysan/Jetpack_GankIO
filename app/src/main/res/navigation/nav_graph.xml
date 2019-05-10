@@ -3,15 +3,19 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/nav_graph"
-        app:startDestination="@id/splashFragment">
-    <fragment
-            android:id="@+id/splashFragment"
-            android:name="io.jetpack.ysan.gankio.ui.fragment.SplashFragment"
-            android:label="SplashFragment">
-        <action
-                android:id="@+id/action_splashFragment_to_homeFragment"
-                app:destination="@id/homeFragment"/>
-    </fragment>
+        app:startDestination="@id/homeFragment">
+
+    <!--<tab_fragment-->
+            <!--android:id="@+id/homeFragment"-->
+            <!--android:name="io.jetpack.ysan.gankio.ui.fragment.HomeFragment"-->
+            <!--android:label="HomeFragment">-->
+        <!--<action-->
+                <!--android:id="@+id/action_homeFragment_to_webViewFragment"-->
+                <!--app:destination="@id/webViewFragment"-->
+                <!--app:popUpTo="@id/homeFragment"-->
+                <!--app:popUpToInclusive="true"/>-->
+    <!--</tab_fragment>-->
+
     <fragment
             android:id="@+id/homeFragment"
             android:name="io.jetpack.ysan.gankio.ui.fragment.HomeFragment"

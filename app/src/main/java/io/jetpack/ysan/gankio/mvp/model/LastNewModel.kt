@@ -23,6 +23,6 @@ class LastNewModel {
      * 获取发过干货的日期
      */
     fun requestDayHistory(): Observable<HistoryDayEntity> {
-        return  RetrofitManager.service.getHistoryDay().compose(SchedulerUtils.ioToMain())
+        return RetrofitManager.service.getHistoryDay().compose(SchedulerUtils.ioToMain())
     }
 }

@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.navigation.fragment.findNavController
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import io.jetpack.ysan.gankio.R
@@ -35,7 +34,7 @@ class SplashFragment : Fragment() {
         WorkManager.getInstance().getWorkInfoByIdLiveData(delayRequest.id).observe(this, Observer {
             Log.i("ysan",  "延时任务:${ it?.state?.name }")
             if (it?.state!!.isFinished) {
-                findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
+//                findNavController().navigate(R.id.action_splashFragment_to_homeFragment)
             }
         })
     }

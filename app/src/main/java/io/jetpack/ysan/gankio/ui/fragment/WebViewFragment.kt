@@ -12,6 +12,7 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.annotation.RequiresApi
+import androidx.navigation.fragment.findNavController
 import io.jetpack.ysan.gankio.R
 import io.jetpack.ysan.gankio.base.BaseFragment
 import io.jetpack.ysan.gankio.mvp.model.entity.Data
@@ -36,7 +37,7 @@ class WebViewFragment : BaseFragment() {
         toolbar.inflateMenu(R.menu.web_toolbar)
         toolbar.setNavigationIcon(R.drawable.icon_back)
         toolbar.setNavigationOnClickListener {
-            activity?.onBackPressed()
+            findNavController().navigateUp()
         }
         toolbar.setOnMenuItemClickListener { item ->
             when (item?.itemId) {
