@@ -1,5 +1,6 @@
 package io.jetpack.ysan.gankio.utils
 
+import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.app.Activity
 import android.content.Context
@@ -21,6 +22,12 @@ import java.util.regex.Pattern
 
 class StatusBarUtil {
 
+    /**
+     * 在 Android 6.0 以前，Android 没有方法可以实现「状态栏黑色字符」效果，因此 MIUI 自己做了一个接口。
+     *
+     * 在 Android 6.0 及以上版本，Android 提供了标准的方法实现「状态栏黑色字符」效果，但这个方法和 MIUI 的方法产生了冲突，
+     * 小米觉决定在MIUI 9之后兼容Android 官方的标准方案，舍弃了自己的方案，所以说，对于MIUI9 以上版本的用户，对于手机状态栏深色字体的实现需要重新适配，
+     */
 
     companion object {
         private var DEFAULT_COLOR = 0
@@ -42,11 +49,26 @@ class StatusBarUtil {
                     var `val` = mtd.invoke(null, "ro.miui.ui.version.name") as String
                     `val` = `val`.replace("[vV]".toRegex(), "")
                     val version = Integer.parseInt(`val`)
-                    version >= 6
+                    (version >= 6) and (version < 8)
                 } catch (e: Exception) {
                     false
                 }
 
+            }
+
+        /** 判断是否为 MIUI9 以上 */
+        private val isMIUI9Later: Boolean
+            get() {
+                return try {
+                    val clz = Class.forName("android.os.SystemProperties")
+                    val mtd = clz.getMethod("get", String::class.java)
+                    var `val` = mtd.invoke(null, "ro.miui.ui.version.name") as String
+                    `val` = `val`.replace("[vV]".toRegex(), "")
+                    val version = Integer.parseInt(`val`)
+                    version >= 9
+                } catch (e: Exception) {
+                    false
+                }
             }
 
         @JvmOverloads
@@ -92,6 +114,43 @@ class StatusBarUtil {
         }
 
         /** 设置状态栏darkMode,字体颜色及icon变黑(目前支持MIUI6以上,Flyme4以上,Android M以上)  */
+        fun lightMode(activity: Activity) {
+            lightMode(activity.window, DEFAULT_COLOR, DEFAULT_ALPHA)
+        }
+
+        fun lightMode(activity: Activity, color: Int, @FloatRange(from = 0.0, to = 1.0) alpha: Float) {
+            lightMode(activity.window, color, alpha)
+        }
+
+        /** 设置状态栏darkMode,字体颜色及icon变黑(目前支持MIUI6以上,Flyme4以上,Android M以上)  */
+        @TargetApi(Build.VERSION_CODES.M)
+        fun lightMode(window: Window, color: Int, @FloatRange(from = 0.0, to = 1.0) alpha: Float) {
+            when {
+                isFlyme4Later -> {
+                    darkModeForFlyme4(window, false)
+                    immersive(window, color, alpha)
+                }
+                isMIUI6Later -> {
+                    darkModeForMIUI6(window, false)
+                    immersive(window, color, alpha)
+                }
+                isMIUI9Later -> {
+                    darkModeForMIUI9(window, false)
+                    immersive(window, color, alpha)
+                }
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.M -> {
+                    darkModeForM(window, false)
+                    immersive(window, color, alpha)
+                }
+                Build.VERSION.SDK_INT >= 19 -> {
+                    window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+                    setTranslucentView(window.decorView as ViewGroup, color, alpha)
+                }
+                else -> immersive(window, color, alpha)
+            }
+        }
+
+        /** 设置状态栏darkMode,字体颜色及icon变黑(目前支持MIUI6以上,Flyme4以上,Android M以上)  */
         fun darkMode(activity: Activity) {
             darkMode(activity.window, DEFAULT_COLOR, DEFAULT_ALPHA)
         }
@@ -110,6 +169,10 @@ class StatusBarUtil {
                 }
                 isMIUI6Later -> {
                     darkModeForMIUI6(window, true)
+                    immersive(window, color, alpha)
+                }
+                isMIUI9Later -> {
+                    darkModeForMIUI9(window, true)
                     immersive(window, color, alpha)
                 }
                 Build.VERSION.SDK_INT >= Build.VERSION_CODES.M -> {
@@ -205,6 +268,34 @@ class StatusBarUtil {
 
         }
         //</editor-fold>
+
+        /**
+         * MIUI 9 之后
+         */
+        @SuppressLint("PrivateApi")
+        @RequiresApi(Build.VERSION_CODES.M)
+        fun darkModeForMIUI9(window: Window, darkmode: Boolean) {
+            val clazz = window.javaClass
+            try {
+                var darkModeFlag = 0
+                val layoutParams = Class.forName("android.view.MiuiWindowManager\$LayoutParams")
+                val field = layoutParams.getField("EXTRA_FLAG_STATUS_BAR_DARK_MODE")
+                darkModeFlag = field.getInt(layoutParams)
+                val extraFlagField = clazz.getMethod("setExtraFlags", Int::class.javaPrimitiveType, Int::class.javaPrimitiveType)
+                extraFlagField.invoke(window, if (darkmode) darkModeFlag else 0, darkModeFlag)
+                if (darkmode) {
+                    window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+                    window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+                    window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                } else {
+                    val flag = window.decorView.systemUiVisibility and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
+                    window.decorView.systemUiVisibility = flag
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
 
 
         /** 增加View的paddingTop,增加的值为状态栏高度  */

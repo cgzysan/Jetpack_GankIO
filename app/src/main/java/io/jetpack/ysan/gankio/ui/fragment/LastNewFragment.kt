@@ -36,7 +36,7 @@ class LastNewFragment : BaseFragment(), LastNewContract.View {
     }
 
     companion object {
-        fun getInstance() : LastNewFragment {
+        fun getInstance(): LastNewFragment {
             val fragment = LastNewFragment()
             val bundle = Bundle()
             fragment.arguments = bundle
@@ -48,50 +48,64 @@ class LastNewFragment : BaseFragment(), LastNewContract.View {
      * 初始化 View
      */
     override fun initView() {
-            mPresenter.attachView(this)
-            mRefreshLayout.setEnableHeaderTranslationContent(true)
-            mRefreshLayout.setOnRefreshListener {
-                isRefresh = true
-                mPresenter.requestLastNewData()
-            }
-            mMaterialHeader = mRefreshLayout.refreshHeader as MaterialHeader?
-            mMaterialHeader?.setShowBezierWave(true)
-            // 设置主题颜色
-            mRefreshLayout.setPrimaryColorsId(R.color.colorAccent, R.color.colorPrimary)
+        mPresenter.attachView(this)
+        mRefreshLayout.setEnableHeaderTranslationContent(true)
+        mRefreshLayout.setOnRefreshListener {
+            isRefresh = true
+            mPresenter.requestLastNewData()
+        }
+        mMaterialHeader = mRefreshLayout.refreshHeader as MaterialHeader?
+        mMaterialHeader?.setShowBezierWave(true)
+        // 设置主题颜色
+        mRefreshLayout.setPrimaryColorsId(R.color.colorAccent, R.color.colorPrimary)
 
-            mRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(recyclerView, dx, dy)
-                    when (val currentVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition()) {
-                        0 -> {
-                            toolbar.setBackgroundColor(getColor(R.color.color_transparent))
-                            iv_search.setImageResource(R.drawable.icon_search_white)
-                            tv_header_title.text = ""
+        mRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                when (val currentVisibleItemPosition = linearLayoutManager.findFirstVisibleItemPosition()) {
+                    0 -> {
+                        toolbar.setBackgroundColor(getColor(R.color.color_transparent))
+                        iv_search.setImageResource(R.drawable.icon_search_white)
+                        tv_header_title.text = ""
+                        //状态栏透明和间距处理
+                        activity?.let {
+                            StatusBarUtil.lightMode(it)
                         }
-                        1 -> {
-                            toolbar.setBackgroundColor(getColor(R.color.color_title_bg))
-                            iv_search.setBackgroundResource(R.drawable.icon_search_black)
-                            mLastNewAdapter?.let {
-                                tv_header_title.text = it.mData[it.bannerItemSize] as String
-                            }
+                    }
+                    1 -> {
+                        toolbar.setBackgroundColor(getColor(R.color.color_title_bg))
+                        iv_search.setBackgroundResource(R.drawable.icon_search_black)
+                        mLastNewAdapter?.let {
+                            tv_header_title.text = it.mData[it.bannerItemSize] as String
                         }
-                        else -> {
-                            toolbar.setBackgroundColor(getColor(R.color.color_title_bg))
-                            iv_search.setImageResource(R.drawable.icon_search_black)
-                            mLastNewAdapter?.let {
-                                val d = it.mData[currentVisibleItemPosition + it.bannerItemSize - 1] as Data
-                                tv_header_title.text = d.type
-                            }
+                        //状态栏透明和间距处理
+                        activity?.let {
+                            StatusBarUtil.darkMode(it)
+                        }
+                    }
+                    else -> {
+                        toolbar.setBackgroundColor(getColor(R.color.color_title_bg))
+                        iv_search.setImageResource(R.drawable.icon_search_black)
+                        mLastNewAdapter?.let {
+                            val d = it.mData[currentVisibleItemPosition + it.bannerItemSize - 1] as Data
+                            tv_header_title.text = d.type
+                        }
+                        //状态栏透明和间距处理
+                        activity?.let {
+                            StatusBarUtil.darkMode(it)
                         }
                     }
                 }
-            })
+            }
+        })
 
-            mLayoutStatusView = last_new_multipleStatusView
+        mLayoutStatusView = last_new_multipleStatusView
 
-            //状态栏透明和间距处理
-            activity?.let { StatusBarUtil.darkMode(it) }
-            activity?.let { StatusBarUtil.setPaddingSmart(it, toolbar) }
+        //状态栏透明和间距处理
+        activity?.let {
+            StatusBarUtil.lightMode(it)
+            StatusBarUtil.setPaddingSmart(it, toolbar)
+        }
     }
 
     override fun lazyLoad() {

@@ -1,17 +1,19 @@
 package io.jetpack.ysan.gankio.ui.adapter
 
+import android.app.Activity
 import android.content.Context
-import android.os.Bundle
+import android.content.Intent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.youth.banner.Banner
 import io.jetpack.ysan.gankio.R
 import io.jetpack.ysan.gankio.mvp.model.entity.Data
+import io.jetpack.ysan.gankio.ui.activity.WebViewActivity
+import io.jetpack.ysan.gankio.utils.Constants
 import io.jetpack.ysan.gankio.utils.DateUtils
 import io.jetpack.ysan.gankio.utils.GlideImageLoader
 import io.jetpack.ysan.gankio.widget.recyclerview.ViewHolder
@@ -111,11 +113,15 @@ class LastNewAdapter(context: Context, data: ArrayList<Any>) : CommonAdapter<Any
                 }
             }
             setOnItemClickListener(listener = View.OnClickListener {
-                val bundle = Bundle()
-                bundle.putSerializable("item_data", data)
-                it.findNavController().navigate(R.id.action_homeFragment_to_webViewFragment, bundle)
+                toDetailWebActivity(mContext as Activity, data)
             })
         }
+    }
+
+    private fun toDetailWebActivity(activity : Activity, itemData: Data) {
+        val intent = Intent(activity, WebViewActivity::class.java)
+        intent.putExtra(Constants.ITEM_DATA, itemData)
+        mContext.startActivity(intent)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
