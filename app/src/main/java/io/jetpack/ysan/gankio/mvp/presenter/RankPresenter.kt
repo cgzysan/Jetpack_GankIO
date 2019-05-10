@@ -1,17 +1,17 @@
 package io.jetpack.ysan.gankio.mvp.presenter
 
 import io.jetpack.ysan.gankio.base.BasePresenter
-import io.jetpack.ysan.gankio.mvp.contract.CategoryContract
-import io.jetpack.ysan.gankio.mvp.model.CategoryModel
+import io.jetpack.ysan.gankio.mvp.contract.RankContract
+import io.jetpack.ysan.gankio.mvp.model.RankModel
 
 
 /**
  * Created by YSAN on 2019-05-09
  */
-class CategoryPresenter : BasePresenter<CategoryContract.View>(), CategoryContract.Presenter {
+class RankPresenter : BasePresenter<RankContract.View>(), RankContract.Presenter {
 
-    private val categoryModel: CategoryModel by lazy {
-        CategoryModel()
+    private val categoryModel: RankModel by lazy {
+        RankModel()
     }
 
     override fun requestCategoryList(category: String, page: Int) {
@@ -28,6 +28,14 @@ class CategoryPresenter : BasePresenter<CategoryContract.View>(), CategoryContra
     }
 
     override fun requestMoreData(category: String, page: Int) {
+        mRootView?.showLoading()
+        val disposable = categoryModel.requestCategoryData(category, page)
+            .subscribe {
+                mRootView?.apply {
+                    showMoreData(it.results)
+                }
+            }
 
+        addSubscription(disposable)
     }
 }

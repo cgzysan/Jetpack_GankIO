@@ -10,7 +10,7 @@ import io.reactivex.Maybe
 /**
  * Created by YSAN on 2019-05-09
  */
-class CategoryModel {
+class RankModel {
 
     /**
      * 获取分类数据

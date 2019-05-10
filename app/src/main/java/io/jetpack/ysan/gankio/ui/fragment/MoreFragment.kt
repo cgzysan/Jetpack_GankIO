@@ -1,6 +1,7 @@
 package io.jetpack.ysan.gankio.ui.fragment
 
 import android.os.Bundle
+import io.jetpack.ysan.gankio.R
 import io.jetpack.ysan.gankio.base.BaseFragment
 
 
@@ -18,9 +19,7 @@ class MoreFragment : BaseFragment() {
         }
     }
 
-    override fun getLayoutId(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun getLayoutId(): Int = R.layout.fragment_more
 
     override fun initView() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.

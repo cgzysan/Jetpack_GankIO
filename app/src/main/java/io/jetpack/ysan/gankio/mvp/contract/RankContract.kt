@@ -8,7 +8,7 @@ import io.jetpack.ysan.gankio.mvp.model.entity.Data
 /**
  * Created by YSAN on 2019-05-09
  */
-interface CategoryContract {
+interface RankContract {
 
     interface View : IBaseView {
         /**

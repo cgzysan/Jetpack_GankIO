@@ -44,11 +44,14 @@ class LastNewFragment : BaseFragment(), LastNewContract.View {
         }
     }
 
+    init {
+        mPresenter.attachView(this)
+    }
+
     /**
      * 初始化 View
      */
     override fun initView() {
-        mPresenter.attachView(this)
         mRefreshLayout.setEnableHeaderTranslationContent(true)
         mRefreshLayout.setOnRefreshListener {
             isRefresh = true

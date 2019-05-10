@@ -8,15 +8,13 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Build
-import android.os.Bundle
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
-import com.classic.common.MultipleStatusView
 import io.jetpack.ysan.gankio.MyApplication.Companion.context
 import io.jetpack.ysan.gankio.R
+import io.jetpack.ysan.gankio.base.BaseActivity
 import io.jetpack.ysan.gankio.mvp.model.entity.Data
 import io.jetpack.ysan.gankio.showToast
 import io.jetpack.ysan.gankio.utils.Constants
@@ -27,21 +25,26 @@ import kotlinx.android.synthetic.main.fragment_web.*
 /**
  * Created by YSAN on 2019-05-10
  */
-class WebViewActivity : AppCompatActivity() {
+class WebViewActivity : BaseActivity() {
 
-    private lateinit var mLayoutStatusView: MultipleStatusView
     private lateinit var itemData: Data
 
-    @SuppressLint("SetJavaScriptEnabled")
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.fragment_web)
+    override fun getLayoutId(): Int = R.layout.fragment_web
 
-        itemData = intent.getSerializableExtra(Constants.ITEM_DATA) as Data
-
+    override fun initView() {
         toolbar.setNavigationIcon(R.drawable.icon_back)
         toolbar.inflateMenu(R.menu.web_toolbar)
         toolbar.title = itemData.desc
+
+        mLayoutStatusView = web_multipleStatusView
+        //状态栏透明和间距处理
+        StatusBarUtil.darkMode(this)
+        StatusBarUtil.setPaddingSmart(this, toolbar)
+
+        initEvent()
+    }
+
+    private fun initEvent() {
         toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
@@ -63,12 +66,14 @@ class WebViewActivity : AppCompatActivity() {
             }
             true
         }
+    }
 
-        mLayoutStatusView = web_multipleStatusView
-        //状态栏透明和间距处理
-        StatusBarUtil.darkMode(this)
-        StatusBarUtil.setPaddingSmart(this, toolbar)
+    override fun initData() {
+        itemData = intent.getSerializableExtra(Constants.ITEM_DATA) as Data
+    }
 
+    @SuppressLint("SetJavaScriptEnabled")
+    override fun start() {
         web_view.let {
             it.settings.javaScriptEnabled = true
             it.webViewClient = object : WebViewClient() {
@@ -79,11 +84,11 @@ class WebViewActivity : AppCompatActivity() {
                 }
 
                 override fun onPageStarted(view: WebView?, url: String?, favicon: Bitmap?) {
-                    mLayoutStatusView.showLoading()
+                    mLayoutStatusView?.showLoading()
                 }
 
                 override fun onPageFinished(view: WebView?, url: String?) {
-                    mLayoutStatusView.showContent()
+                    mLayoutStatusView?.showContent()
                 }
             }
             it.loadUrl(itemData.url)

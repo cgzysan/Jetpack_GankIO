@@ -16,4 +16,6 @@
     <!-- title 半透明背景颜色 -->
     <color name="color_title_bg">#CCFFFFFF</color>
     <color name="color_transparent">#00000000</color>
+
+    <color name="color_light_black">#5000</color>
 </resources>
