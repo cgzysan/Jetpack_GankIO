@@ -15,14 +15,36 @@ class ReadPresenter : BasePresenter<ReadContract.View>(), ReadContract.Presenter
     }
 
     override fun requestCategories() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        checkViewAttached()
+        mRootView?.showLoading()
+        val disposable = readModel.requestReadCategories()
+            .subscribe{
+                mRootView?.apply {
+                    setTabData(it.results)
+                }
+            }
+        addSubscription(disposable)
     }
 
     override fun requestSubCategories(category: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        mRootView?.showLoading()
+        val disposable = readModel.requestReadSubCategories(category)
+            .subscribe{
+                mRootView?.apply {
+                    showSubCategories(it.results)
+                }
+            }
+        addSubscription(disposable)
     }
 
     override fun requestReadData(category: String, page: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        mRootView?.showLoading()
+        val disposable = readModel.requestReadData(category, page)
+            .subscribe {
+                mRootView?.apply {
+                    showReadData(it.results)
+                }
+            }
+        addSubscription(disposable)
     }
 }

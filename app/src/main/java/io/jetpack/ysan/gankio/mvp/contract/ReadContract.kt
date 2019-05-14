@@ -2,6 +2,9 @@ package io.jetpack.ysan.gankio.mvp.contract
 
 import io.jetpack.ysan.gankio.base.IBaseView
 import io.jetpack.ysan.gankio.base.IPresenter
+import io.jetpack.ysan.gankio.mvp.model.entity.ReadCategoriesEntity
+import io.jetpack.ysan.gankio.mvp.model.entity.ReadEntity
+import io.jetpack.ysan.gankio.mvp.model.entity.ReadSubCategoriesEntity
 
 
 /**
@@ -15,6 +18,21 @@ interface ReadContract {
          * 错误信息
          */
         fun showError(msg: String, errorCode: Int)
+
+        /**
+         *  设置 tab 数据
+         */
+        fun setTabData(results: ArrayList<ReadCategoriesEntity>)
+
+        /**
+         * 显示子分类
+         */
+        fun showSubCategories(results: ArrayList<ReadSubCategoriesEntity>)
+
+        /**
+         * 显示闲读数据
+         */
+        fun showReadData(results: ArrayList<ReadEntity>)
     }
 
     interface Presenter: IPresenter<View> {
