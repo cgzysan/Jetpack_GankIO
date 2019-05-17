@@ -25,6 +25,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.WebViewActivity"/>
+        <activity android:name=".ui.activity.ReadActivity"/>
     </application>
 
 </manifest>

@@ -37,7 +37,7 @@ class LastNewAdapter(context: Context, data: ArrayList<Any>) : CommonAdapter<Any
     /**
      * 设置 banner 数量
      */
-    fun setBannerSie(count: Int) {
+    fun setBannerSize(count: Int) {
         bannerItemSize = count
     }
 

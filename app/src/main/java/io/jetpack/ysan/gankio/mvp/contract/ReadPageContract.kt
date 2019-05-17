@@ -2,13 +2,13 @@ package io.jetpack.ysan.gankio.mvp.contract
 
 import io.jetpack.ysan.gankio.base.IBaseView
 import io.jetpack.ysan.gankio.base.IPresenter
-import io.jetpack.ysan.gankio.mvp.model.entity.ReadCategoriesEntity
+import io.jetpack.ysan.gankio.mvp.model.entity.ReadSubCategoriesEntity
 
 
 /**
- * Created by YSAN on 2019-05-13
+ * Created by YSAN on 2019-05-16
  */
-interface ReadContract {
+interface ReadPageContract {
 
     interface View: IBaseView {
 
@@ -18,16 +18,17 @@ interface ReadContract {
         fun showError(msg: String, errorCode: Int)
 
         /**
-         *  设置 tab 数据
+         * 显示子分类
          */
-        fun setTabData(results: ArrayList<ReadCategoriesEntity>)
+        fun showSubCategories(results: ArrayList<ReadSubCategoriesEntity>)
     }
 
     interface Presenter: IPresenter<View> {
 
         /**
-         * 获取闲读分类
+         * 获取闲读子分类
          */
-        fun requestCategories()
+        fun requestSubCategories(category: String)
     }
+
 }

@@ -2,32 +2,29 @@ package io.jetpack.ysan.gankio.mvp.contract
 
 import io.jetpack.ysan.gankio.base.IBaseView
 import io.jetpack.ysan.gankio.base.IPresenter
-import io.jetpack.ysan.gankio.mvp.model.entity.ReadCategoriesEntity
+import io.jetpack.ysan.gankio.mvp.model.entity.ReadEntity
 
 
 /**
- * Created by YSAN on 2019-05-13
+ * Created by YSAN on 2019-05-16
  */
-interface ReadContract {
+interface ReadDetailContract {
 
-    interface View: IBaseView {
-
+    interface View: IBaseView{
         /**
          * 错误信息
          */
         fun showError(msg: String, errorCode: Int)
-
         /**
-         *  设置 tab 数据
+         * 显示闲读数据
          */
-        fun setTabData(results: ArrayList<ReadCategoriesEntity>)
+        fun showReadData(results: ArrayList<ReadEntity>)
     }
 
     interface Presenter: IPresenter<View> {
-
         /**
-         * 获取闲读分类
+         * 根据分类获取闲读数据
          */
-        fun requestCategories()
+        fun requestReadData(category: String, page: Int)
     }
 }

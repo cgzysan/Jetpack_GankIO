@@ -26,25 +26,4 @@ class ReadPresenter : BasePresenter<ReadContract.View>(), ReadContract.Presenter
         addSubscription(disposable)
     }
 
-    override fun requestSubCategories(category: String) {
-        mRootView?.showLoading()
-        val disposable = readModel.requestReadSubCategories(category)
-            .subscribe{
-                mRootView?.apply {
-                    showSubCategories(it.results)
-                }
-            }
-        addSubscription(disposable)
-    }
-
-    override fun requestReadData(category: String, page: Int) {
-        mRootView?.showLoading()
-        val disposable = readModel.requestReadData(category, page)
-            .subscribe {
-                mRootView?.apply {
-                    showReadData(it.results)
-                }
-            }
-        addSubscription(disposable)
-    }
 }

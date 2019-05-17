@@ -123,7 +123,7 @@ class LastNewFragment : BaseFragment(), LastNewContract.View {
         mLayoutStatusView?.showContent()
 
         mLastNewAdapter = context?.let { LastNewAdapter(it, lastNewEntity.content) }
-        mLastNewAdapter?.setBannerSie(lastNewEntity.count)
+        mLastNewAdapter?.setBannerSize(lastNewEntity.count)
 
         mRecyclerView.adapter = mLastNewAdapter
         mRecyclerView.layoutManager = linearLayoutManager

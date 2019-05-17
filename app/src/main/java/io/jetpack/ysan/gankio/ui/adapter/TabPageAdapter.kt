@@ -8,7 +8,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 /**
  * Created by YSAN on 2019-05-10
  */
-class TabPageAdapter(fm: FragmentManager, var fragmentList: ArrayList<Fragment>, var titleList: ArrayList<String>) : FragmentStatePagerAdapter(fm) {
+class TabPageAdapter(fm: FragmentManager, private var fragmentList: ArrayList<Fragment>, private var titleList: ArrayList<String>) : FragmentStatePagerAdapter(fm) {
 
     override fun getItem(position: Int): Fragment = fragmentList[position]
 
