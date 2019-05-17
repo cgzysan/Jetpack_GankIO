@@ -19,6 +19,11 @@ interface ReadDetailContract {
          * 显示闲读数据
          */
         fun showReadData(results: ArrayList<ReadEntity>)
+
+        /**
+         * 加载更多数据
+         */
+        fun showMoreData(results: ArrayList<ReadEntity>)
     }
 
     interface Presenter: IPresenter<View> {

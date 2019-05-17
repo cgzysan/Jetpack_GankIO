@@ -40,6 +40,10 @@ class ReadPageFragment : BaseFragment(), ReadPageContract.View {
 
     override fun getLayoutId(): Int = R.layout.fragment_rank
 
+    init {
+        mPresenter.attachView(this)
+    }
+
     override fun initView() {
         mLayoutStatusView = rank_multipleStatusView
         rank_recyclerView.layoutManager = LinearLayoutManager(activity)

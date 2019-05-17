@@ -6,5 +6,6 @@ package io.jetpack.ysan.gankio.utils
  */
 object Constants {
     const val BASE_URL = "http://gank.io/api/"
-    const val ITEM_DATA = "item_data"
+    const val URL = "url"
+    const val DESC = "desc"
 }

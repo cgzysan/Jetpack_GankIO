@@ -22,7 +22,6 @@ import io.jetpack.ysan.gankio.widget.recyclerview.adapter.CommonAdapter
  */
 class RankAdapter(context: Context, dataList: ArrayList<Data>, layoutId: Int) : CommonAdapter<Data>(context, dataList, layoutId) {
 
-
     fun addData(dataList: ArrayList<Data>) {
         this.mData.addAll(dataList)
         notifyDataSetChanged()
@@ -56,7 +55,8 @@ class RankAdapter(context: Context, dataList: ArrayList<Data>, layoutId: Int) : 
 
     private fun toDetailWebActivity(activity : Activity, itemData: Data) {
         val intent = Intent(activity, WebViewActivity::class.java)
-        intent.putExtra(Constants.ITEM_DATA, itemData)
+        intent.putExtra(Constants.URL, itemData.url)
+        intent.putExtra(Constants.DESC, itemData.desc)
         mContext.startActivity(intent)
     }
 }

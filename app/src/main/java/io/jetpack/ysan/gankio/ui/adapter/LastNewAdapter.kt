@@ -120,7 +120,8 @@ class LastNewAdapter(context: Context, data: ArrayList<Any>) : CommonAdapter<Any
 
     private fun toDetailWebActivity(activity : Activity, itemData: Data) {
         val intent = Intent(activity, WebViewActivity::class.java)
-        intent.putExtra(Constants.ITEM_DATA, itemData)
+        intent.putExtra(Constants.URL, itemData.url)
+        intent.putExtra(Constants.DESC, itemData.desc)
         mContext.startActivity(intent)
     }
 

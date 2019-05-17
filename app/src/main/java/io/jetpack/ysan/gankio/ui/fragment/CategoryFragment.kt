@@ -37,7 +37,6 @@ class CategoryFragment : Fragment() {
         initView()
     }
 
-
     fun initView() {
         //状态栏透明和间距处理
         activity?.let {

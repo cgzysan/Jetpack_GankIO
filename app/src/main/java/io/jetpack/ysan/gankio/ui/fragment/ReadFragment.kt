@@ -38,6 +38,10 @@ class ReadFragment : BaseFragment(), ReadContract.View {
 
     override fun getLayoutId(): Int = R.layout.fragment_read
 
+    init {
+        mPresenter.attachView(this)
+    }
+
     override fun initView() {
         //状态栏透明和间距处理
         activity?.let {

@@ -15,7 +15,6 @@ import androidx.annotation.RequiresApi
 import io.jetpack.ysan.gankio.MyApplication.Companion.context
 import io.jetpack.ysan.gankio.R
 import io.jetpack.ysan.gankio.base.BaseActivity
-import io.jetpack.ysan.gankio.mvp.model.entity.Data
 import io.jetpack.ysan.gankio.showToast
 import io.jetpack.ysan.gankio.utils.Constants
 import io.jetpack.ysan.gankio.utils.StatusBarUtil
@@ -27,14 +26,15 @@ import kotlinx.android.synthetic.main.fragment_web.*
  */
 class WebViewActivity : BaseActivity() {
 
-    private lateinit var itemData: Data
+    private lateinit var url: String
+    private lateinit var desc: String
 
     override fun getLayoutId(): Int = R.layout.fragment_web
 
     override fun initView() {
         toolbar.setNavigationIcon(R.drawable.icon_back)
         toolbar.inflateMenu(R.menu.web_toolbar)
-        toolbar.title = itemData.desc
+        toolbar.title = desc
 
         mLayoutStatusView = web_multipleStatusView
         //状态栏透明和间距处理
@@ -57,11 +57,11 @@ class WebViewActivity : BaseActivity() {
                 R.id.web_copy_link ->
                     copyTextToClipboard()
                 R.id.web_open_in_browser -> {
-                    var url = itemData.url
+                    var openUrl = url
                     if (!url.startsWith("http://") && !url.startsWith("https://")) {
-                        url = "http://$url"
+                        openUrl = "http://$url"
                     }
-                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+                    startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(openUrl)))
                 }
             }
             true
@@ -69,7 +69,8 @@ class WebViewActivity : BaseActivity() {
     }
 
     override fun initData() {
-        itemData = intent.getSerializableExtra(Constants.ITEM_DATA) as Data
+        url = intent.getStringExtra(Constants.URL)
+        desc = intent.getStringExtra(Constants.DESC)
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -91,13 +92,13 @@ class WebViewActivity : BaseActivity() {
                     mLayoutStatusView?.showContent()
                 }
             }
-            it.loadUrl(itemData.url)
+            it.loadUrl(url)
         }
     }
 
     private fun copyTextToClipboard() {
         val clipboardManager: ClipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        clipboardManager.primaryClip = ClipData.newPlainText("link", itemData.url)
+        clipboardManager.primaryClip = ClipData.newPlainText("link", url)
         showToast("已复制到剪切板")
     }
 }
