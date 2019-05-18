@@ -12,8 +12,8 @@ class MoreFragment : BaseFragment() {
 
     companion object {
         fun getInstance() : MoreFragment {
-            var fragment = MoreFragment()
-            var bundle = Bundle()
+            val fragment = MoreFragment()
+            val bundle = Bundle()
             fragment.arguments = bundle
             return fragment
         }
@@ -22,10 +22,10 @@ class MoreFragment : BaseFragment() {
     override fun getLayoutId(): Int = R.layout.fragment_more
 
     override fun initView() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 
     override fun lazyLoad() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
     }
 }
